@@ -50,12 +50,16 @@ export default function Leg(props) {
 
     let numberOfTransfers = flight.flight.legs[legId].segments.length - 1
 
+    function forCorrectTimeFormatting(num) {
+        return num < 10 ? '0' + num.toString() : num.toString()
+    }
+
     /* Departure */
     let departure = new Date(
         flight.flight.legs[legId].segments[0].departureDate
     )
-    let departureHours = departure.getUTCHours() + 3
-    let departureMinutes = departure.getUTCMinutes()
+    let departureHours = forCorrectTimeFormatting(departure.getUTCHours() + 3)
+    let departureMinutes = forCorrectTimeFormatting(departure.getUTCMinutes())
     let departureDate = departure.getUTCDate()
     let departureDay = days[departure.getUTCDay()]
     let departureMonth = months[departure.getUTCMonth()]
@@ -64,8 +68,8 @@ export default function Leg(props) {
     let arrival = new Date(
         flight.flight.legs[legId].segments[lastSegment].arrivalDate
     )
-    let arrivalHours = arrival.getUTCHours() + 3
-    let arrivalMinutes = arrival.getUTCMinutes()
+    let arrivalHours = forCorrectTimeFormatting(arrival.getUTCHours() + 3)
+    let arrivalMinutes = forCorrectTimeFormatting(arrival.getUTCMinutes())
     let arrivalDate = arrival.getUTCDate()
     let arrivalDay = days[arrival.getUTCDay()]
     let arrivalMonth = months[arrival.getUTCMonth()]
