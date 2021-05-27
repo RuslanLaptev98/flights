@@ -1,12 +1,18 @@
 import Card from './Card'
 import Filter from './Filter'
+import jsonFlights from './flights.json'
 
 function App() {
+    const flights = jsonFlights
+
     return (
         <div className="App">
             <Filter />
             <div className="main">
-                <Card />
+                {flights.result.flights.map((flight) => (
+                    <Card flights={flights} />
+                ))}
+
                 <button className="show">Показать еще</button>
             </div>
         </div>

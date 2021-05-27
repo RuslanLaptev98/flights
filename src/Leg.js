@@ -1,7 +1,8 @@
 import React from 'react'
 import flights from './flights.json'
 
-export default function Leg() {
+export default function Leg(props) {
+    const legId = props.legId
     let days = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб']
     let months = [
         'янв.',
@@ -17,23 +18,27 @@ export default function Leg() {
         'ноя.',
         'дек.',
     ]
+    const lastSegment =
+        flights.result.flights[0].flight.legs[legId].segments.length - 1
 
     let departureCity =
-        flights.result.flights[0].flight.legs[0].segments[0].departureCity
+        flights.result.flights[0].flight.legs[legId].segments[0].departureCity
             .caption
     let arrivalCity =
-        flights.result.flights[0].flight.legs[0].segments[1].arrivalCity.caption
+        flights.result.flights[0].flight.legs[legId].segments[lastSegment]
+            .arrivalCity.caption
     let departureAirport =
-        flights.result.flights[0].flight.legs[0].segments[0].departureAirport
-            .caption
+        flights.result.flights[0].flight.legs[legId].segments[0]
+            .departureAirport.caption
     let departureAirportCode =
-        flights.result.flights[0].flight.legs[0].segments[0].departureAirport
-            .uid
+        flights.result.flights[0].flight.legs[legId].segments[0]
+            .departureAirport.uid
     let arrivalAirport =
-        flights.result.flights[0].flight.legs[0].segments[1].arrivalAirport
-            .caption
+        flights.result.flights[0].flight.legs[legId].segments[lastSegment]
+            .arrivalAirport.caption
     let arrivalAirportCode =
-        flights.result.flights[0].flight.legs[0].segments[1].arrivalAirport.uid
+        flights.result.flights[0].flight.legs[legId].segments[lastSegment]
+            .arrivalAirport.uid
     function timeConvert(n) {
         var num = n
         var hours = num / 60
@@ -43,16 +48,17 @@ export default function Leg() {
         return rhours + ' ч ' + rminutes + ' мин'
     }
     let travelTime = timeConvert(
-        flights.result.flights[0].flight.legs[0].duration
+        flights.result.flights[0].flight.legs[legId].duration
     )
-    let airlines = flights.result.flights[0].flight.carrier.caption
+    let airlines =
+        flights.result.flights[0].flight.legs[legId].segments[0].airline.caption
 
     let numberOfTransfers =
-        flights.result.flights[0].flight.legs[0].segments.length - 1
+        flights.result.flights[0].flight.legs[legId].segments.length - 1
 
     /* Departure */
     let departure = new Date(
-        flights.result.flights[0].flight.legs[0].segments[0].departureDate
+        flights.result.flights[0].flight.legs[legId].segments[0].departureDate
     )
     let departureHours = departure.getUTCHours() + 3
     let departureMinutes = departure.getUTCMinutes()
@@ -62,7 +68,9 @@ export default function Leg() {
 
     /* Arrival */
     let arrival = new Date(
-        flights.result.flights[0].flight.legs[0].segments[1].arrivalDate
+        flights.result.flights[0].flight.legs[legId].segments[
+            lastSegment
+        ].arrivalDate
     )
     let arrivalHours = arrival.getUTCHours() + 3
     let arrivalMinutes = arrival.getUTCMinutes()
