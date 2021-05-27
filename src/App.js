@@ -10,7 +10,7 @@ function App() {
             <Filter />
             <div className="main">
                 {flights.result.flights.map((flight) => (
-                    <Card flights={flights} />
+                    <Card flight={flight} />
                 ))}
 
                 <button className="show">Показать еще</button>
