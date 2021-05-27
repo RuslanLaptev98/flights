@@ -1,14 +1,11 @@
-import flights from './flights.json'
 import Card from './Card'
 import Filter from './Filter'
 
 function App() {
-    console.log(flights)
     return (
         <div className="App">
             <Filter />
             <div className="main">
-                <Card />
                 <Card />
                 <button className="show">Показать еще</button>
             </div>
@@ -21,7 +18,7 @@ export default App
 /*
 Стоимость: [id].flight.price.total.amount
 For each leg:
-    Время в пути: [0].flight.legs[0].duration
+    Время в пути: flights.result.flights[0].flight.legs[0].duration
     Количество пересадок: количество сегментов - 1
     Авиакомпания: [0].flight.carrier.caption
 

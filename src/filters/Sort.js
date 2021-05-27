@@ -5,7 +5,12 @@ export default function sort() {
         <div>
             <form action="">
                 <p className="bold-text">Сортировать</p>
-                <input type="radio" name="sort-type" id="sortChoice1" />
+                <input
+                    type="radio"
+                    name="sort-type"
+                    id="sortChoice1"
+                    defaultChecked
+                />
                 <label htmlFor="sortChoice1"> - по возрастанию цены</label>
                 <br />
                 <input type="radio" name="sort-type" id="sortChoice2" />
