@@ -1,10 +1,13 @@
 import React from 'react'
 
-export default function sort() {
+export default function Sort({ flights }) {
+    // flights.result.flights.flight.price.total.amount
+
     return (
         <div>
             <form action="">
                 <p className="bold-text">Сортировать</p>
+                <p>функция недоступна :(</p>
                 <input
                     type="radio"
                     name="sort-type"

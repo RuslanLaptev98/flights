@@ -11,7 +11,7 @@ function App() {
     }
     return (
         <div className="App">
-            <Filter />
+            <Filter flights={flights} />
             <div className="main">
                 {flights.result.flights.slice(0, visible).map((flight) => (
                     <Card flight={flight} />
