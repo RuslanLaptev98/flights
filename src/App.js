@@ -1,19 +1,25 @@
 import Card from './Card'
 import Filter from './Filter'
 import jsonFlights from './flights.json'
+import { useState } from 'react'
 
 function App() {
     const flights = jsonFlights
-
+    const [visible, setVisible] = useState(2)
+    const loadMoreFlights = () => {
+        setVisible((prevValue) => prevValue + 2)
+    }
     return (
         <div className="App">
             <Filter />
             <div className="main">
-                {flights.result.flights.map((flight) => (
+                {flights.result.flights.slice(0, visible).map((flight) => (
                     <Card flight={flight} />
                 ))}
 
-                <button className="show">Показать еще</button>
+                <button className="show" onClick={loadMoreFlights}>
+                    Показать еще
+                </button>
             </div>
         </div>
     )
