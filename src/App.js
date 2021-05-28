@@ -14,7 +14,7 @@ function App() {
             <Filter flights={flights} />
             <div className="main">
                 {flights.result.flights.slice(0, visible).map((flight) => (
-                    <Card flight={flight} />
+                    <Card flight={flight} key={flight.flightToken} />
                 ))}
 
                 <button className="show" onClick={loadMoreFlights}>

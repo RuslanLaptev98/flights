@@ -24,11 +24,9 @@ export default function Leg(props) {
     let lastSegment = flight.flight.legs[legId].segments.length - 1
 
     let departureCity =
-        flights.result.flights[0].flight.legs[legId].segments[0].departureCity
-            .caption
+        flight.flight.legs[legId].segments[0].departureCity.caption
     let arrivalCity =
-        flights.result.flights[0].flight.legs[legId].segments[lastSegment]
-            .arrivalCity.caption
+        flight.flight.legs[legId].segments[lastSegment].arrivalCity.caption
     let departureAirport =
         flight.flight.legs[legId].segments[0].departureAirport.caption
     let departureAirportCode =
