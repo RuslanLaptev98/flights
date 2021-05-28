@@ -1,13 +1,11 @@
 import React from 'react'
-import flights from './flights.json'
 
 export default function Leg(props) {
     const legId = props.legId
     const flight = props.flight
-    console.log()
 
-    let days = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб']
-    let months = [
+    const days = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб']
+    const months = [
         'янв.',
         'фев.',
         'мар.',
@@ -21,19 +19,30 @@ export default function Leg(props) {
         'ноя.',
         'дек.',
     ]
-    let lastSegment = flight.flight.legs[legId].segments.length - 1
+    const lastSegment = flight.flight.legs[legId].segments.length - 1
 
-    let departureCity =
-        flight.flight.legs[legId].segments[0].departureCity.caption
-    let arrivalCity =
-        flight.flight.legs[legId].segments[lastSegment].arrivalCity.caption
-    let departureAirport =
+    let departureCity
+    if (flight.flight.legs[legId].segments[0].departureCity) {
+        departureCity =
+            flight.flight.legs[legId].segments[0].departureCity.caption
+    } else {
+        departureCity = 'Город'
+    }
+    let arrivalCity
+    if (flight.flight.legs[legId].segments[lastSegment].arrivalCity) {
+        arrivalCity =
+            flight.flight.legs[legId].segments[lastSegment].arrivalCity.caption
+    } else {
+        arrivalCity = 'Город'
+    }
+
+    const departureAirport =
         flight.flight.legs[legId].segments[0].departureAirport.caption
-    let departureAirportCode =
+    const departureAirportCode =
         flight.flight.legs[legId].segments[0].departureAirport.uid
-    let arrivalAirport =
+    const arrivalAirport =
         flight.flight.legs[legId].segments[lastSegment].arrivalAirport.caption
-    let arrivalAirportCode =
+    const arrivalAirportCode =
         flight.flight.legs[legId].segments[lastSegment].arrivalAirport.uid
     function timeConvert(n) {
         var num = n

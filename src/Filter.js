@@ -10,7 +10,7 @@ export default function Filter({ flights }) {
             <div className="grey-box" id="top-grey-box"></div>
             <div className="filter-content">
                 <Sort flights={flights} />
-                <Transfer />
+                <Transfer flights={flights} />
                 <Price flights={flights} />
                 <Airlines flights={flights} />
             </div>

@@ -9,11 +9,14 @@ function App() {
     const loadMoreFlights = () => {
         setVisible((prevValue) => prevValue + 2)
     }
+
+    let flightsArray = []
+    flightsArray = flights.result.flights.map((flight) => flight)
     return (
         <div className="App">
-            <Filter flights={flights} />
+            <Filter flights={flightsArray} />
             <div className="main">
-                {flights.result.flights.slice(0, visible).map((flight) => (
+                {flightsArray.slice(0, visible).map((flight) => (
                     <Card flight={flight} key={flight.flightToken} />
                 ))}
 

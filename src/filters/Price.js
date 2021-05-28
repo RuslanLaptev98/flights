@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react'
 
 export default function Price({ flights }) {
-    console.log(flights)
     const [minNumber, setMinNumber] = useState()
     const [maxNumber, setMaxNumber] = useState()
     useEffect(() => {
-        console.log(minNumber)
-        console.log(maxNumber)
+        //console.log(minNumber)
+        //console.log(maxNumber)
     }, [minNumber])
     return (
         <div>
