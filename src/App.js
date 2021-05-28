@@ -1,7 +1,9 @@
 import Card from './Card'
-import Filter from './Filter'
 import jsonFlights from './flights.json'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import Airlines from './filters/Airlines'
+import Price from './filters/Price'
+import Transfer from './filters/Transfer'
 
 function App() {
     const flights = jsonFlights
@@ -9,12 +11,115 @@ function App() {
     const loadMoreFlights = () => {
         setVisible((prevValue) => prevValue + 2)
     }
+    let [flightsArray, setFlightsArray] = useState(
+        flights.result.flights.map((flight) => flight)
+    )
 
-    let flightsArray = []
-    flightsArray = flights.result.flights.map((flight) => flight)
+    // Sort
+    // по возрастанию цены
+    const priceAscending = () => {
+        setFlightsArray(
+            flightsArray.sort(
+                (x, y) =>
+                    x.flight.price.total.amount - y.flight.price.total.amount
+            )
+        )
+    }
+
+    // по убыванию цены
+    const priceDescending = () => {
+        setFlightsArray(
+            flightsArray.sort(
+                (x, y) =>
+                    y.flight.price.total.amount - x.flight.price.total.amount
+            )
+        )
+    }
+
+    // по времени в пути
+    const travelTime = () => {
+        setFlightsArray(
+            flightsArray.sort(
+                (x, y) =>
+                    x.flight.legs[0].duration +
+                    x.flight.legs[1].duration -
+                    y.flight.legs[0].duration -
+                    y.flight.legs[1].duration
+            )
+        )
+    }
+
+    const [radio, setRadio] = useState()
+
+    useEffect(() => {
+        console.log('useEffect worked')
+    }, [radio, flightsArray])
+
     return (
         <div className="App">
-            <Filter flights={flightsArray} />
+            <div className="Filter">
+                <div className="grey-box" id="top-grey-box"></div>
+                <div className="filter-content">
+                    <div>
+                        <form action="">
+                            <p className="bold-text">Сортировать</p>
+                            <input
+                                type="radio"
+                                name="sort-type"
+                                id="sortChoice1"
+                                checked={radio === 'sortChoice1'}
+                                value="sortChoice1"
+                                onChange={(e) => {
+                                    priceAscending()
+                                    setRadio(e.target.value)
+                                }}
+                            />
+                            <label htmlFor="sortChoice1">
+                                {' '}
+                                - по возрастанию цены
+                            </label>
+                            <br />
+                            <input
+                                type="radio"
+                                name="sort-type"
+                                id="sortChoice2"
+                                checked={radio === 'sortChoice2'}
+                                value="sortChoice2"
+                                onChange={(e) => {
+                                    priceDescending()
+                                    setRadio(e.target.value)
+                                }}
+                            />
+                            <label htmlFor="sortChoice2">
+                                {' '}
+                                - по убыванию в цене
+                            </label>
+                            <br />
+                            <input
+                                type="radio"
+                                name="sort-type"
+                                id="sortChoice3"
+                                checked={radio === 'sortChoice3'}
+                                value="sortChoice3"
+                                onChange={(e) => {
+                                    travelTime()
+                                    setRadio(e.target.value)
+                                }}
+                            />
+                            <label htmlFor="sortChoice3">
+                                {' '}
+                                - по времени в пути
+                            </label>
+                        </form>
+                    </div>
+
+                    <Transfer flights={flightsArray} />
+                    <Price flights={flightsArray} />
+                    <Airlines flights={flightsArray} />
+                </div>
+                <div className="grey-box" id="bottom-grey-box"></div>
+            </div>
+
             <div className="main">
                 {flightsArray.slice(0, visible).map((flight) => (
                     <Card flight={flight} key={flight.flightToken} />
