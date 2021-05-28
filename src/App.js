@@ -3,7 +3,6 @@ import jsonFlights from './flights.json'
 import { useState, useEffect } from 'react'
 import Airlines from './filters/Airlines'
 import Price from './filters/Price'
-import Transfer from './filters/Transfer'
 
 function App() {
     const flights = jsonFlights
@@ -14,6 +13,7 @@ function App() {
     let [flightsArray, setFlightsArray] = useState(
         flights.result.flights.map((flight) => flight)
     )
+    const initialFlightsArray = flights.result.flights.map((flight) => flight)
 
     // Sort
     // по возрастанию цены
@@ -51,10 +51,99 @@ function App() {
 
     const [radio, setRadio] = useState()
 
+    // Number of transfers
+    const [oneIsChecked, setOneIsChecked] = useState(false)
+    const [zeroIsChecked, setZeroIsChecked] = useState(false)
+    console.log(flightsArray)
+    const zeroChecked = () => {
+        if (zeroIsChecked && oneIsChecked) {
+            setFlightsArray(
+                initialFlightsArray.filter((flight) => {
+                    return (
+                        flight.flight.legs[0].segments.length -
+                            1 +
+                            flight.flight.legs[1].segments.length -
+                            1 <=
+                        1
+                    )
+                })
+            )
+        } else if (zeroIsChecked && !oneIsChecked) {
+            setFlightsArray(
+                initialFlightsArray.filter((flight) => {
+                    return (
+                        flight.flight.legs[0].segments.length -
+                            1 +
+                            flight.flight.legs[1].segments.length -
+                            1 ===
+                        0
+                    )
+                })
+            )
+        } else if (!zeroIsChecked && oneIsChecked) {
+            setFlightsArray(
+                initialFlightsArray.filter((flight) => {
+                    return (
+                        flight.flight.legs[0].segments.length -
+                            1 +
+                            flight.flight.legs[1].segments.length -
+                            1 ===
+                        1
+                    )
+                })
+            )
+        } else {
+            setFlightsArray(initialFlightsArray)
+        }
+    }
+    const oneChecked = () => {
+        if (oneIsChecked && zeroIsChecked) {
+            setFlightsArray(
+                initialFlightsArray.filter((flight) => {
+                    return (
+                        flight.flight.legs[0].segments.length -
+                            1 +
+                            flight.flight.legs[1].segments.length -
+                            1 <=
+                        1
+                    )
+                })
+            )
+        } else if (oneIsChecked && !zeroIsChecked) {
+            setFlightsArray(
+                initialFlightsArray.filter((flight) => {
+                    return (
+                        flight.flight.legs[0].segments.length -
+                            1 +
+                            flight.flight.legs[1].segments.length -
+                            1 ===
+                        1
+                    )
+                })
+            )
+        } else if (!oneIsChecked && zeroIsChecked) {
+            setFlightsArray(
+                initialFlightsArray.filter((flight) => {
+                    return (
+                        flight.flight.legs[0].segments.length -
+                            1 +
+                            flight.flight.legs[1].segments.length -
+                            1 ===
+                        0
+                    )
+                })
+            )
+        } else {
+            setFlightsArray(initialFlightsArray)
+        }
+    }
+    useEffect(() => {}, [radio, oneIsChecked, flightsArray])
     useEffect(() => {
-        console.log('useEffect worked')
-    }, [radio, flightsArray])
-
+        zeroChecked()
+    }, [zeroIsChecked])
+    useEffect(() => {
+        oneChecked()
+    }, [oneIsChecked])
     return (
         <div className="App">
             <div className="Filter">
@@ -113,7 +202,42 @@ function App() {
                         </form>
                     </div>
 
-                    <Transfer flights={flightsArray} />
+                    <div>
+                        <form action="">
+                            <p className="bold-text">Фильтровать</p>
+
+                            <input
+                                type="checkbox"
+                                name="onetransfer"
+                                id="filterChoice1"
+                                checked={oneIsChecked}
+                                onChange={(e) => {
+                                    setOneIsChecked(e.target.checked)
+                                }}
+                            />
+                            <label htmlFor="filterChoice1">
+                                {' '}
+                                - 1 пересадка
+                            </label>
+
+                            <br />
+
+                            <input
+                                type="checkbox"
+                                name="notransfer"
+                                id="filterChoice2"
+                                checked={zeroIsChecked}
+                                onChange={(e) => {
+                                    setZeroIsChecked(e.target.checked)
+                                }}
+                            />
+                            <label htmlFor="filterChoice2">
+                                {' '}
+                                - без пересадок
+                            </label>
+                        </form>
+                    </div>
+
                     <Price flights={flightsArray} />
                     <Airlines flights={flightsArray} />
                 </div>
