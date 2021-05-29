@@ -2,7 +2,6 @@ import Card from './Card'
 import jsonFlights from './flights.json'
 import { useState, useEffect } from 'react'
 import Airlines from './filters/Airlines'
-import Price from './filters/Price'
 
 function App() {
     const flights = jsonFlights
@@ -51,10 +50,19 @@ function App() {
 
     const [radio, setRadio] = useState()
 
+    const radioWithTransfers = () => {
+        if (radio === 'sortChoice1') {
+            priceAscending()
+        } else if (radio === 'sortChoice2') {
+            priceDescending()
+        } else if (radio === 'sortChoice3') {
+            travelTime()
+        }
+    }
+
     // Number of transfers
     const [oneIsChecked, setOneIsChecked] = useState(false)
     const [zeroIsChecked, setZeroIsChecked] = useState(false)
-    console.log(flightsArray)
     const zeroChecked = () => {
         if (zeroIsChecked && oneIsChecked) {
             setFlightsArray(
@@ -137,13 +145,33 @@ function App() {
             setFlightsArray(initialFlightsArray)
         }
     }
-    useEffect(() => {}, [radio, oneIsChecked, flightsArray])
+    // Price
+    const [minNumber, setMinNumber] = useState('0')
+    const [maxNumber, setMaxNumber] = useState('150000')
+
+    const filterByPrice = (min, max) => {
+        setFlightsArray(
+            flightsArray.filter((flight) => {
+                return (
+                    flight.flight.price.total.amount >= min &&
+                    flight.flight.price.total.amount <= max
+                )
+            })
+        )
+    }
+
+    useEffect(() => {}, [radio, flightsArray])
     useEffect(() => {
         zeroChecked()
     }, [zeroIsChecked])
     useEffect(() => {
         oneChecked()
     }, [oneIsChecked])
+    useEffect(() => {
+        console.log(minNumber)
+        console.log(maxNumber)
+        filterByPrice(minNumber, maxNumber)
+    }, [minNumber, maxNumber])
     return (
         <div className="App">
             <div className="Filter">
@@ -238,7 +266,31 @@ function App() {
                         </form>
                     </div>
 
-                    <Price flights={flightsArray} />
+                    <div>
+                        <p className="bold-text">Цена</p>
+                        <label htmlFor="startPrice">От </label>
+                        <input
+                            type="number"
+                            name="startPrice"
+                            id="startPrice"
+                            value={minNumber}
+                            onChange={(event) =>
+                                setMinNumber(event.target.value)
+                            }
+                        />
+                        <br />
+                        <label htmlFor="endPrice">До </label>
+                        <input
+                            type="number"
+                            name="endPrice"
+                            id="endPrice"
+                            value={maxNumber}
+                            onChange={(event) =>
+                                setMaxNumber(event.target.value)
+                            }
+                        />
+                    </div>
+
                     <Airlines flights={flightsArray} />
                 </div>
                 <div className="grey-box" id="bottom-grey-box"></div>
