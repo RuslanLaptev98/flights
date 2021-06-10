@@ -157,6 +157,14 @@ function App() {
                     flight.flight.price.total.amount <= max
                 )
             })
+            //.push(() => {
+            //    if (initialFlightsArray.flight.price.total.amount >= min &&
+            //                  initialFlightsArray.flight.price.total.amount <= max ) {
+
+            //                      return (
+
+            //              )}
+            //          })
         )
     }
 
