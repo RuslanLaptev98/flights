@@ -1,7 +1,6 @@
 import Card from './Card'
 import jsonFlights from './flights.json'
 import { useState, useEffect } from 'react'
-import Airlines from './filters/Airlines'
 
 function App() {
     const flights = jsonFlights
@@ -9,10 +8,12 @@ function App() {
     const loadMoreFlights = () => {
         setVisible((prevValue) => prevValue + 2)
     }
-    let [flightsArray, setFlightsArray] = useState(
+    const [flightsArray, setFlightsArray] = useState(
         flights.result.flights.map((flight) => flight)
     )
-    const initialFlightsArray = flights.result.flights.map((flight) => flight)
+    const [secondFlightsArray, setSecondFlightsArray] = useState([])
+
+    //const initialFlightsArray = flights.result.flights.map((flight) => flight)
 
     // Sort
     // по возрастанию цены
@@ -50,7 +51,7 @@ function App() {
 
     const [radio, setRadio] = useState()
 
-    const radioWithTransfers = () => {
+    /*const radioWithTransfers = () => {
         if (radio === 'sortChoice1') {
             priceAscending()
         } else if (radio === 'sortChoice2') {
@@ -58,15 +59,16 @@ function App() {
         } else if (radio === 'sortChoice3') {
             travelTime()
         }
-    }
+    }*/
 
     // Number of transfers
-    const [oneIsChecked, setOneIsChecked] = useState(false)
+    /*const [oneIsChecked, setOneIsChecked] = useState(false)
     const [zeroIsChecked, setZeroIsChecked] = useState(false)
-    const zeroChecked = () => {
+
+    const checkboxChecked1 = () => {
         if (zeroIsChecked && oneIsChecked) {
             setFlightsArray(
-                initialFlightsArray.filter((flight) => {
+                flightsArray.filter((flight) => {
                     return (
                         flight.flight.legs[0].segments.length -
                             1 +
@@ -74,11 +76,20 @@ function App() {
                             1 <=
                         1
                     )
-                })
+                }) +
+                    secondFlightsArray.filter((flight) => {
+                        return (
+                            flight.flight.legs[0].segments.length -
+                                1 +
+                                flight.flight.legs[1].segments.length -
+                                1 <=
+                            1
+                        )
+                    })
             )
         } else if (zeroIsChecked && !oneIsChecked) {
             setFlightsArray(
-                initialFlightsArray.filter((flight) => {
+                flightsArray.filter((flight) => {
                     return (
                         flight.flight.legs[0].segments.length -
                             1 +
@@ -86,11 +97,20 @@ function App() {
                             1 ===
                         0
                     )
-                })
+                }) +
+                    secondFlightsArray.filter((flight) => {
+                        return (
+                            flight.flight.legs[0].segments.length -
+                                1 +
+                                flight.flight.legs[1].segments.length -
+                                1 ===
+                            0
+                        )
+                    })
             )
         } else if (!zeroIsChecked && oneIsChecked) {
             setFlightsArray(
-                initialFlightsArray.filter((flight) => {
+                flightsArray.filter((flight) => {
                     return (
                         flight.flight.legs[0].segments.length -
                             1 +
@@ -98,88 +118,128 @@ function App() {
                             1 ===
                         1
                     )
-                })
+                }) +
+                    secondFlightsArray.filter((flight) => {
+                        return (
+                            flight.flight.legs[0].segments.length -
+                                1 +
+                                flight.flight.legs[1].segments.length -
+                                1 ===
+                            1
+                        )
+                    })
             )
         } else {
-            setFlightsArray(initialFlightsArray)
+            setFlightsArray(flightsArray + secondFlightsArray)
         }
     }
-    const oneChecked = () => {
-        if (oneIsChecked && zeroIsChecked) {
-            setFlightsArray(
-                initialFlightsArray.filter((flight) => {
+    const checkboxChecked2 = () => {
+        if (zeroIsChecked && oneIsChecked) {
+            setSecondFlightsArray(
+                flightsArray.filter((flight) => {
                     return (
                         flight.flight.legs[0].segments.length -
                             1 +
                             flight.flight.legs[1].segments.length -
-                            1 <=
+                            1 >
                         1
                     )
-                })
+                }) +
+                    secondFlightsArray.filter((flight) => {
+                        return (
+                            flight.flight.legs[0].segments.length -
+                                1 +
+                                flight.flight.legs[1].segments.length -
+                                1 >
+                            1
+                        )
+                    })
             )
-        } else if (oneIsChecked && !zeroIsChecked) {
-            setFlightsArray(
-                initialFlightsArray.filter((flight) => {
+        } else if (zeroIsChecked && !oneIsChecked) {
+            setSecondFlightsArray(
+                flightsArray.filter((flight) => {
                     return (
                         flight.flight.legs[0].segments.length -
                             1 +
                             flight.flight.legs[1].segments.length -
-                            1 ===
-                        1
-                    )
-                })
-            )
-        } else if (!oneIsChecked && zeroIsChecked) {
-            setFlightsArray(
-                initialFlightsArray.filter((flight) => {
-                    return (
-                        flight.flight.legs[0].segments.length -
-                            1 +
-                            flight.flight.legs[1].segments.length -
-                            1 ===
+                            1 >
                         0
                     )
-                })
+                }) +
+                    secondFlightsArray.filter((flight) => {
+                        return (
+                            flight.flight.legs[0].segments.length -
+                                1 +
+                                flight.flight.legs[1].segments.length -
+                                1 >
+                            0
+                        )
+                    })
+            )
+        } else if (!zeroIsChecked && oneIsChecked) {
+            setSecondFlightsArray(
+                flightsArray.filter((flight) => {
+                    return (
+                        flight.flight.legs[0].segments.length -
+                            1 +
+                            flight.flight.legs[1].segments.length -
+                            1 !==
+                        1
+                    )
+                }) +
+                    secondFlightsArray.filter((flight) => {
+                        return (
+                            flight.flight.legs[0].segments.length -
+                                1 +
+                                flight.flight.legs[1].segments.length -
+                                1 !==
+                            1
+                        )
+                    })
             )
         } else {
-            setFlightsArray(initialFlightsArray)
         }
     }
+*/
+    /*
     // Price
     const [minNumber, setMinNumber] = useState('0')
     const [maxNumber, setMaxNumber] = useState('150000')
 
     const filterByPrice = (min, max) => {
-        setFlightsArray(
-            flightsArray.filter((flight) => {
-                return (
-                    flight.flight.price.total.amount >= min &&
-                    flight.flight.price.total.amount <= max
+        setSecondFlightsArray(
+            flightsArray
+                .map((flight) => {
+                    if (
+                        flight.flight.price.total.amount < min ||
+                        flight.flight.price.total.amount > max
+                    ) {
+                        return flight
+                    }
+                })
+                .concat(
+                    secondFlightsArray.map((flight) => {
+                        if (
+                            flight.flight.price.total.amount < min ||
+                            flight.flight.price.total.amount > max
+                        ) {
+                            return flight
+                        }
+                    })
                 )
-            })
-            //.push(() => {
-            //    if (initialFlightsArray.flight.price.total.amount >= min &&
-            //                  initialFlightsArray.flight.price.total.amount <= max ) {
-
-            //                      return (
-
-            //              )}
-            //          })
         )
-    }
+        console.log(secondFlightsArray)
+    } */
 
     useEffect(() => {}, [radio, flightsArray])
-    useEffect(() => {
-        zeroChecked()
-    }, [zeroIsChecked])
-    useEffect(() => {
-        oneChecked()
-    }, [oneIsChecked])
-    useEffect(() => {
-        console.log(minNumber)
-        console.log(maxNumber)
+    /*useEffect(() => {
+        checkboxChecked1()
+        checkboxChecked2()
+    }, [zeroIsChecked, oneIsChecked])*/
+
+    /* useEffect(() => {
         filterByPrice(minNumber, maxNumber)
-    }, [minNumber, maxNumber])
+    }, [minNumber, maxNumber]) */
     return (
         <div className="App">
             <div className="Filter">
@@ -238,7 +298,7 @@ function App() {
                         </form>
                     </div>
 
-                    <div>
+                    {/*<div>
                         <form action="">
                             <p className="bold-text">Фильтровать</p>
 
@@ -272,9 +332,9 @@ function App() {
                                 - без пересадок
                             </label>
                         </form>
-                    </div>
+                            </div>*/}
 
-                    <div>
+                    {/* <div>
                         <p className="bold-text">Цена</p>
                         <label htmlFor="startPrice">От </label>
                         <input
@@ -297,9 +357,7 @@ function App() {
                                 setMaxNumber(event.target.value)
                             }
                         />
-                    </div>
-
-                    <Airlines flights={flightsArray} />
+                        </div>*/}
                 </div>
                 <div className="grey-box" id="bottom-grey-box"></div>
             </div>
