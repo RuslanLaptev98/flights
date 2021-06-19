@@ -9,17 +9,15 @@ export default function Card(props) {
     const totalPrice = flight.flight.price.total.amount
 
     return (
-        <div className="Card">
-            <div className="cardhead">
-                <p className="total-price">{totalPrice} ₽</p>
-
+        <div className="card">
+            <div className="card__head">
+                <p className="card__total-price">{totalPrice} ₽</p>
                 <p>Стоимость для одного взрослого пассажира</p>
             </div>
-
             <Leg legId={topLeg} flight={flight} />
-            <div className="line"></div>
+            <div className="card__line"></div>
             <Leg legId={bottomLeg} flight={flight} />
-            <button className="choiceButton">ВЫБРАТЬ</button>
+            <button className="card__choice-button">ВЫБРАТЬ</button>
         </div>
     )
 }

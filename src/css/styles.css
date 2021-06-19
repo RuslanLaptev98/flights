@@ -1,0 +1,151 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap");
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.app {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1fr 3fr;
+      grid-template-columns: 1fr 3fr;
+}
+
+.main .main__show-more-btn {
+  display: block;
+  margin: auto;
+  margin-bottom: 30px;
+  font-size: 1.25rem;
+  background-color: #f1f1f1;
+  padding-left: 3.75rem;
+  padding-right: 3.75rem;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+.filter .filter__content {
+  padding: 20px;
+}
+
+.filter .filter__top-box {
+  background-color: #d9d9d9;
+  height: 36px;
+}
+
+.filter .filter__bottom-box {
+  background-color: #d9d9d9;
+  height: 144px;
+}
+
+.filter .filter__title {
+  font-weight: 700;
+  margin-top: 30px;
+  padding-bottom: 8px;
+}
+
+.card {
+  margin: 24px;
+}
+
+.card .card__head {
+  width: 100%;
+  color: white;
+  background-color: #0087c9;
+  text-align: right;
+  padding-right: 20px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.card .card__total-price {
+  font-size: 1.5rem;
+}
+
+.card .card__line {
+  width: 100%;
+  height: 2px;
+  background-color: #0087c9;
+}
+
+.card .card__choice-button {
+  border: none;
+  width: 100%;
+  background-color: #ffb168;
+  font-size: 1.25rem;
+  color: white;
+  padding: 10px;
+}
+
+.card .card__choice-button:hover {
+  opacity: 0.9;
+}
+
+.leg {
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+.leg .leg__cities {
+  font-size: 1.25rem;
+  padding: 8px;
+}
+
+.leg .leg__time {
+  font-size: 1.25rem;
+  padding-top: 12px;
+  padding-bottom: 6px;
+  padding-right: 8px;
+  padding-left: 8px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.leg .leg__departure-time {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+}
+
+.leg .leg__travel-time {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  text-align: center;
+}
+
+.leg .leg__arrival-time {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  text-align: right;
+}
+
+.leg .leg__transfers {
+  font-size: 1.125rem;
+  text-align: center;
+  color: #ff8e1d;
+}
+
+.leg .leg__secondary-text {
+  color: #0087c9;
+  font-size: 1.125rem;
+}
+
+.leg .leg__line {
+  width: 100%;
+  height: 1px;
+  background-color: #e5e5e5;
+}
+
+.leg .leg__airline {
+  font-size: 1.125rem;
+  padding-top: 12px;
+  padding-bottom: 8px;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+/*# sourceMappingURL=styles.css.map */

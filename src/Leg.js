@@ -82,31 +82,35 @@ export default function Leg(props) {
     let arrivalMonth = months[arrival.getUTCMonth()]
 
     return (
-        <div className="Leg">
-            <p className="cities">
+        <div className="leg">
+            <p className="leg__cities">
                 {departureCity}, {departureAirport}{' '}
-                <span className="blue-text">({departureAirportCode}) → </span>
+                <span className="leg__secondary-text">
+                    ({departureAirportCode}) →{' '}
+                </span>
                 {arrivalCity}, {arrivalAirport}{' '}
-                <span className="blue-text">({arrivalAirportCode})</span>
+                <span className="leg__secondary-text">
+                    ({arrivalAirportCode})
+                </span>
             </p>
-            <div className="grey-line"></div>
-            <div className="flight-time">
-                <span className="flight-time-one">
+            <div className="leg__line"></div>
+            <div className="leg__time">
+                <span className="leg__departure-time">
                     {departureHours}:{departureMinutes}{' '}
-                    <span className="blue-text">
+                    <span className="leg__secondary-text">
                         {departureDate} {departureMonth} {departureDay}
                     </span>
                 </span>
-                <span className="flight-time-two">{travelTime}</span>
-                <span className="flight-time-three">
-                    <span className="blue-text">
+                <span className="leg__travel-time">{travelTime}</span>
+                <span className="leg__arrival-time">
+                    <span className="leg__secondary-text">
                         {arrivalDate} {arrivalMonth} {arrivalDay}
                     </span>{' '}
                     {arrivalHours}:{arrivalMinutes}
                 </span>
             </div>
-            <div className="line-transfer">Пересадок: {numberOfTransfers}</div>
-            <p className="airline-name">Рейс выполняет: {airlines}</p>
+            <div className="leg__transfers">Пересадок: {numberOfTransfers}</div>
+            <p className="leg__airline">Рейс выполняет: {airlines}</p>
         </div>
     )
 }
